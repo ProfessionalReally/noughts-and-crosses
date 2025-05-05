@@ -1,0 +1,26 @@
+@use '../../styles/abstracts/functions' as *;
+@use '../../styles/abstracts/variables' as *;
+
+.information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: px-to-rem(50);
+
+  &__title {
+    color: $color-white;
+    font-size: px-to-rem(60);
+    font-weight: 700;
+  }
+
+  &__text {
+    &--nought {
+      color: $color-primary;
+    }
+
+    &--cross {
+      color: $color-primary-sec;
+    }
+  }
+}

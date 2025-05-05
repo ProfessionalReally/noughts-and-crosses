@@ -1,0 +1,40 @@
+@use '../../styles/abstracts/functions' as *;
+@use '../../styles/abstracts/variables' as *;
+@use "sass:color";
+
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: px-to-rem(25);
+
+  &__button-reset {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 75px;
+    cursor: pointer;
+    border-radius: 50px;
+    background-color: $color-bg-btn;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-size: px-to-rem(26);
+    font-family: inherit;
+    color: $color-primary;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+
+    &:hover {
+      background-color: color.adjust($color-bg-btn, $lightness: 5%);
+      box-shadow: 0 6px 14px rgba($color-black, .25);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      background-color: color.adjust($color-bg-btn, $lightness: -5%);
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba($color-black, .2);
+    }
+  }
+}

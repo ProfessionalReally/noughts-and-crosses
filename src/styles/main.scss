@@ -1,0 +1,18 @@
+@use './abstracts/functions' as *;
+@use './abstracts/variables' as *;
+@use './abstracts/fonts' as *;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $color-bg;
+  font-family: $base-font;
+}
+
+#root {
+  min-width: 320px;
+}
