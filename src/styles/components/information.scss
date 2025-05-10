@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   margin-top: px-to-rem(50);
+  gap: px-to-rem(40);
 
   &__title {
     color: $color-white;
@@ -21,6 +22,19 @@
 
     &--cross {
       color: $color-primary-sec;
+    }
+  }
+
+  &__status {
+    color: $color-white;
+    font-size: px-to-rem(60);
+    font-weight: 500;
+
+    img {
+      transform: translateY(10%);
+      width: 50px;
+      height: 50px;
+      pointer-events: none;
     }
   }
 }

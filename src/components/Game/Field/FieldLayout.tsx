@@ -1,41 +1,19 @@
 import '../../../styles/components/field.scss';
-import cross from '../../../assets/cross.png';
-import nought from '../../../assets/nought.png';
+import { IGame } from "../../../types/types.ts";
+import Cell from "./Cell/Cell.tsx";
 
-export default function FieldLayout() {
+type PropsType = Pick<IGame, 'field'>;
+
+export default function FieldLayout({field}: PropsType) {
     return (
         <section
             className={'field'}
             role="group"
             aria-label="Game board noughts and crosses"
         >
-            <button className={'field__button'}>
-                <img src={cross} alt={'cross'}/>
-            </button>
-            <button className={'field__button'}>
-                <img src={nought} alt={'nought'}/>
-            </button>
-            <button className={'field__button'}>
-                <img src={nought} alt={'nought'}/>
-            </button>
-            <button className={'field__button'}>
-                <img src={cross} alt={'cross'}/>
-            </button>
-            <button className={'field__button'}>
-                <img src={nought} alt={'nought'}/>
-            </button>
-            <button className={'field__button'}>
-
-            </button>
-            <button className={'field__button'}>
-                <img src={nought} alt={'nought'}/>
-            </button>
-            <button className={'field__button'}>
-                <img src={cross} alt={'cross'}/>
-            </button>
-            <button className={'field__button'}>
-                <img src={cross} alt={'cross'}/>
-            </button>
+            {field.length > 0 && field.map((item, index) => {
+                return <Cell item={item} key={index}/>
+            })}
         </section>
     )
 }
