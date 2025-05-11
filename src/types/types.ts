@@ -15,6 +15,7 @@ export interface IGame {
     isGameEnded: boolean;
     isDraw: boolean;
     field: (Player | '')[];
+    winningCombo: number[] | null;
 }
 
 export interface ISign {

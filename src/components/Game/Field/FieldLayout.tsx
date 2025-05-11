@@ -12,7 +12,7 @@ export default function FieldLayout({field}: PropsType) {
             aria-label="Game board noughts and crosses"
         >
             {field.length > 0 && field.map((item, index) => {
-                return <Cell item={item} key={index}/>
+                return <Cell item={item} key={index} index={index}/>
             })}
         </section>
     )

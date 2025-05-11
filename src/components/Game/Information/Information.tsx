@@ -27,7 +27,7 @@ const getSign = (item: Player): ISign => {
 
 const getStatusMarkup = ({currentPlayer, isDraw, isGameEnded}: GameStatus) => {
     if (isDraw) {
-        return <p className={'information__status'}>Draw</p>
+        return <p className={'information__status'}>It's a Draw!</p>
     } else if (!isDraw) {
         const sign = getSign(currentPlayer);
         const img = <img src={sign.img} alt={sign.title}/>;
@@ -49,7 +49,8 @@ const getStatusMarkup = ({currentPlayer, isDraw, isGameEnded}: GameStatus) => {
 }
 
 export default function Information() {
-    const {currentPlayer, isDraw, isGameEnded} = useGame();
+    const {game} = useGame();
+    const {currentPlayer, isDraw, isGameEnded} = game;
 
     const ContentComponent = React.memo(() => {
         return getStatusMarkup({currentPlayer, isDraw, isGameEnded});
