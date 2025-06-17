@@ -1,15 +1,9 @@
-import GameLayout from "./GameLayout.tsx";
-import {useGame} from "../../context/GameContext.tsx";
+import { GameLayout } from './GameLayout';
+import { store } from '@src/redux/store';
+import { resetGame } from '@src/redux/actions/actions';
 
-export default function Game() {
-    const {resetGame} = useGame();
+export const Game = () => {
+	const handleClickReset = () => store.dispatch(resetGame());
 
-    const handleClickReset = () =>  {
-        resetGame();
-    }
-
-    return (
-        <GameLayout onClickReset={handleClickReset}/>
-    )
-}
-
+	return <GameLayout onClickReset={handleClickReset} />;
+};

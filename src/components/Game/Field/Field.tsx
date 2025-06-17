@@ -1,11 +1,8 @@
-import FieldLayout from "./FieldLayout.tsx";
-import {useGame} from "../../../context/GameContext.tsx";
+import { FieldLayout } from './FieldLayout';
+import { useReduxSelector } from '@src/hooks/useReduxSelector';
 
-export default function Field() {
-    const {game} = useGame();
+export const Field = () => {
+	const { field } = useReduxSelector((state) => state);
 
-    return (
-        <FieldLayout field={game.field}/>
-    )
-}
-
+	return <FieldLayout field={field} />;
+};

@@ -1,24 +1,24 @@
-export enum Sign {
-    Cross = 'cross',
-    Nought = 'nought',
-}
+export const Sign = {
+	Cross: 'cross',
+	Nought: 'nought',
+} as const;
 
-export enum PlayerSign {
-    Cross = 'X',
-    Nought = '0',
-}
+export const PlayerSign = {
+	Cross: 'X',
+	Nought: '0',
+} as const;
 
 export type Player = 'X' | '0';
 
 export interface IGame {
-    currentPlayer: Player;
-    isGameEnded: boolean;
-    isDraw: boolean;
-    field: (Player | '')[];
-    winningCombo: number[] | null;
+	currentPlayer: Player;
+	isGameEnded: boolean;
+	isDraw: boolean;
+	field: (Player | '')[];
+	winningCombo: number[] | null;
 }
 
 export interface ISign {
-    img: string;
-    title: string;
+	img: string;
+	title: string;
 }

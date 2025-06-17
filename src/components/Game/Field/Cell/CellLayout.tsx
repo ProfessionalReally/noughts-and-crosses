@@ -1,26 +1,30 @@
-import '../../../../styles/components/cell.scss';
-import React from "react";
-import {IGame} from "../../../../types/types.ts";
+import '@src/styles/components/cell.scss';
+import { memo, useCallback, FC, ReactNode } from 'react';
 
 type PropsType = {
-    children: React.ReactNode;
-    onClickCell: (index: number) => void;
-    index: number;
-    isWinning: boolean;
-    isGameEnded: IGame['isGameEnded'];
-}
+	children: ReactNode;
+	onClickCell: (index: number) => void;
+	index: number;
+	isWinning: boolean;
+	isGameEnded: boolean;
+};
 
-export default function CellLayout({children, onClickCell, index, isWinning, isGameEnded}: PropsType) {
-    const isDisabled = !!children || isGameEnded;
+export const CellLayout: FC<PropsType> = memo(
+	({ children, onClickCell, index, isWinning, isGameEnded }) => {
+		const isDisabled = !!children || isGameEnded;
 
-    return (
-        <button
-            onClick={() => onClickCell(index)}
-            disabled={isDisabled}
-            className={`cell__button ${isWinning ? 'cell__button-win' : ''}`}
-        >
-            {children}
-        </button>
-    );
-}
+		const onClick = useCallback(() => {
+			onClickCell(index);
+		}, [index, onClickCell]);
 
+		return (
+			<button
+				onClick={onClick}
+				disabled={isDisabled}
+				className={`cell__button ${isWinning ? 'cell__button-win' : ''}`}
+			>
+				{children}
+			</button>
+		);
+	},
+);

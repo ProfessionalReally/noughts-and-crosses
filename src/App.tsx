@@ -1,11 +1,10 @@
-import Game from "./components/Game/Game.tsx";
+import { Game } from './components/Game/Game';
 import './styles/components/app.scss';
 
-export default function App() {
-    return (
-        <div className={'app'}>
-            <Game/>
-        </div>
-    )
-}
-
+export const App = () => {
+	return (
+		<div className={'app'}>
+			<Game />
+		</div>
+	);
+};

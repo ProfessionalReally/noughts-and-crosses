@@ -1,65 +1,50 @@
-import InformationLayout from "./InformationLayout.tsx";
-import {useGame} from "../../../context/GameContext.tsx";
-import {
-    IGame,
-    ISign,
-    Player,
-    PlayerSign,
-    Sign
-} from "../../../types/types.ts";
-import cross from "../../../assets/cross.png";
-import nought from "../../../assets/nought.png";
-import React from "react";
-
-type GameStatus = {
-    currentPlayer: IGame['currentPlayer'];
-    isDraw: IGame['isDraw'];
-    isGameEnded: IGame["isGameEnded"];
-}
+import { InformationLayout } from './InformationLayout';
+import { ISign, Player, PlayerSign, Sign } from '@src/types/types';
+import cross from '@src/assets/cross.png';
+import nought from '@src/assets/nought.png';
+import { memo } from 'react';
+import { useReduxSelector } from '@src/hooks/useReduxSelector';
 
 const getSign = (item: Player): ISign => {
-    if (item === PlayerSign.Cross) {
-        return {img: cross, title: Sign.Cross};
-    } else {
-        return {img: nought, title: Sign.Nought};
-    }
-}
+	if (item === PlayerSign.Cross) return { img: cross, title: Sign.Cross };
+	return { img: nought, title: Sign.Nought };
+};
 
-const getStatusMarkup = ({currentPlayer, isDraw, isGameEnded}: GameStatus) => {
-    if (isDraw) {
-        return <p className={'information__status'}>It's a Draw!</p>
-    } else if (!isDraw) {
-        const sign = getSign(currentPlayer);
-        const img = <img src={sign.img} alt={sign.title}/>;
-        if (isGameEnded) {
-            return (
-                <p className={'information__status'}>
-                    Congratulations: {img} Win
-                </p>
-            )
-        } else {
-            return (
-                <p className={'information__status'}>
-                    Player {img} turn:
-                </p>
-            )
-        }
-    }
-    return null;
-}
+const getStatusMarkup = ({
+	currentPlayer,
+	isDraw,
+	isGameEnded,
+}: {
+	currentPlayer: Player;
+	isDraw: boolean;
+	isGameEnded: boolean;
+}) => {
+	if (isDraw) return <p className={'information__status'}>It's a Draw!</p>;
 
-export default function Information() {
-    const {game} = useGame();
-    const {currentPlayer, isDraw, isGameEnded} = game;
+	const sign = getSign(currentPlayer);
+	const img = <img src={sign.img} alt={sign.title} />;
 
-    const ContentComponent = React.memo(() => {
-        return getStatusMarkup({currentPlayer, isDraw, isGameEnded});
-    });
+	return (
+		<p className={'information__status'}>
+			{isGameEnded ? 'Congratulations: ' : 'Player '}
+			{img}
+			{isGameEnded ? ' Win' : ' turn:'}
+		</p>
+	);
+};
 
-    return (
-        <InformationLayout>
-            <ContentComponent/>
-        </InformationLayout>
-    )
-}
+export const Information = () => {
+	const { currentPlayer, isDraw, isGameEnded } = useReduxSelector(
+		(state) => state,
+	);
 
+	const MemoizedStatusMarkup = memo(() =>
+		getStatusMarkup({ currentPlayer, isDraw, isGameEnded }),
+	);
+
+	return (
+		<InformationLayout>
+			<MemoizedStatusMarkup />
+		</InformationLayout>
+	);
+};
