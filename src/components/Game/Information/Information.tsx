@@ -3,7 +3,12 @@ import { ISign, Player, PlayerSign, Sign } from '@src/types/types';
 import cross from '@src/assets/cross.png';
 import nought from '@src/assets/nought.png';
 import { memo } from 'react';
-import { useReduxSelector } from '@src/hooks/useReduxSelector';
+import { useSelector } from 'react-redux';
+import {
+	selectCurrentPlayer,
+	selectIsDraw,
+	selectIsGameEnded,
+} from '@src/redux/selectors';
 
 const getSign = (item: Player): ISign => {
 	if (item === PlayerSign.Cross) return { img: cross, title: Sign.Cross };
@@ -34,9 +39,9 @@ const getStatusMarkup = ({
 };
 
 export const Information = () => {
-	const { currentPlayer, isDraw, isGameEnded } = useReduxSelector(
-		(state) => state,
-	);
+	const currentPlayer = useSelector(selectCurrentPlayer);
+	const isDraw = useSelector(selectIsDraw);
+	const isGameEnded = useSelector(selectIsGameEnded);
 
 	const MemoizedStatusMarkup = memo(() =>
 		getStatusMarkup({ currentPlayer, isDraw, isGameEnded }),

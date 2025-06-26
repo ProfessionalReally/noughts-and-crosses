@@ -1,17 +1,11 @@
 import { createStore } from 'redux';
 import { gameReducer } from '@src/redux/reducers';
+import type { IGame } from '@src/types/types.ts';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
-declare global {
-	interface Window {
-		__REDUX_DEVTOOLS_EXTENSION__?: any;
-	}
-}
+export const store = createStore(gameReducer, composeWithDevTools());
 
-export const store = createStore(
-	gameReducer,
-	window.__REDUX_DEVTOOLS_EXTENSION__ &&
-		window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState> & {
+	game: IGame;
+};
 export type AppDispatch = typeof store.dispatch;

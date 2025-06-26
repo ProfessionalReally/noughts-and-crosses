@@ -1,6 +1,7 @@
-import { IGame, Player, PlayerSign } from '@src/types/types';
-import { WIN_PATTERNS } from '@src/constants/constants';
+import { IGame, PlayerSign } from '@src/types/types';
 import * as actions from '../actions/actionTypes';
+import { getGameState, getNextPlayer } from '@src/redux/utils';
+import { resetGame, takeTurn } from '@src/redux/actions/actions';
 
 const initialState: IGame = {
 	currentPlayer: PlayerSign.Cross,
@@ -10,68 +11,17 @@ const initialState: IGame = {
 	winningCombo: null,
 };
 
-type ActionType = {
-	type: string;
-	payload?: any;
-};
-
-const checkWinGame = (
-	field: (Player | '')[],
-	currentPlayer: Player,
-): number[] | null => {
-	let winningCombo: number[] | null = null;
-
-	WIN_PATTERNS.some((combo) => {
-		const isWinning = combo.every(
-			(index) => field[index] === currentPlayer,
-		);
-		if (isWinning) {
-			winningCombo = combo;
-			return true;
-		}
-		return false;
-	});
-
-	return winningCombo;
-};
-
-const checkDrawGame = (field: (Player | '')[]) => {
-	return field.every((cell) => {
-		return cell !== '';
-	});
-};
-
-const getGameState = (
-	field: (Player | '')[],
-	currentPlayer: Player,
-): {
-	isGameEnded: boolean;
-	isDraw: boolean;
-	winningCombo: number[] | null;
-} => {
-	const winningCombo = checkWinGame(field, currentPlayer);
-	return {
-		isGameEnded: !!winningCombo,
-		isDraw: !winningCombo && checkDrawGame(field),
-		winningCombo,
-	};
-};
-
-const getNextPlayer = (currentPlayer: Player): Player => {
-	return currentPlayer === PlayerSign.Cross
-		? PlayerSign.Nought
-		: PlayerSign.Cross;
-};
+type ActionType = ReturnType<typeof takeTurn> | ReturnType<typeof resetGame>;
 
 export const gameReducer = (
 	state: IGame = initialState,
-	{ type, payload }: ActionType,
+	action: ActionType,
 ) => {
-	switch (type) {
+	switch (action.type) {
 		case actions.TAKE_TURN:
-			if (!state.isGameEnded && !state.field[payload]) {
+			if (!state.isGameEnded && !state.field[action.payload]) {
 				const newField = [...state.field];
-				newField[payload] = state.currentPlayer;
+				newField[action.payload] = state.currentPlayer;
 				const { isGameEnded, isDraw, winningCombo } = getGameState(
 					newField,
 					state.currentPlayer,
@@ -82,7 +32,9 @@ export const gameReducer = (
 					isDraw,
 					winningCombo,
 					field: newField,
-					currentPlayer: getNextPlayer(state.currentPlayer),
+					currentPlayer: isGameEnded
+						? state.currentPlayer
+						: getNextPlayer(state.currentPlayer),
 				};
 			}
 			return state;

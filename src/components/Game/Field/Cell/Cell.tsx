@@ -2,10 +2,11 @@ import { CellLayout } from './CellLayout';
 import cross from '@src/assets/cross.png';
 import nought from '@src/assets/nought.png';
 import { ISign, Player, PlayerSign, Sign } from '@src/types/types';
-import { useReduxSelector } from '@src/hooks/useReduxSelector';
-import { store } from '@src/redux/store';
 import { takeTurn } from '@src/redux/actions/actions';
 import { memo, useCallback, FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsGameEnded, selectWinningCombo } from '@src/redux/selectors';
+import { AppDispatch } from '@src/redux/store';
 
 type PropsType = {
 	item: Player | '';
@@ -24,14 +25,17 @@ const getSign = (item: Player | ''): ISign | null => {
 };
 
 export const Cell: FC<PropsType> = memo(({ item, index }) => {
-	const { winningCombo, isGameEnded } = useReduxSelector((state) => state);
+	const winningCombo = useSelector(selectWinningCombo);
+	const isGameEnded = useSelector(selectIsGameEnded);
+	const dispatch = useDispatch<AppDispatch>();
+
 	const sign = getSign(item);
 
 	const handleTakeTurn = useCallback(
 		(index: number) => {
-			store.dispatch(takeTurn(index));
+			dispatch(takeTurn(index));
 		},
-		[store, takeTurn, index],
+		[dispatch],
 	);
 
 	return (

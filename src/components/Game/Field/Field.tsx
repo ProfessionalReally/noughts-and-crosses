@@ -1,8 +1,9 @@
 import { FieldLayout } from './FieldLayout';
-import { useReduxSelector } from '@src/hooks/useReduxSelector';
+import { useSelector } from 'react-redux';
+import { selectField } from '@src/redux/selectors';
 
 export const Field = () => {
-	const { field } = useReduxSelector((state) => state);
+	const field = useSelector(selectField);
 
 	return <FieldLayout field={field} />;
 };
