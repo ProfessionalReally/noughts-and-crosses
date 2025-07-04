@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Work+Sans:ital,wght@0,500;1,500&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --bg-main: #0f1b21;
+    --bg-button: #1f3540;
+    --bg-button-hover: #2c4750;
+    --bg-button-active: #162b35;
+    --bg-cell-highlight: #4a6b78;
+
+    --color-accent-main: #26ffcb;
+    --color-accent-secondary: #ffc226;
+    --color-accent-purple: #D946EF;
+
+    --shadow-btn-default: 0 4px 10px rgba(0, 0, 0, 0.15);
+    --shadow-btn-hover: 0 6px 14px rgba(0, 0, 0, 0.25);
+    --shadow-btn-active: 0 2px 6px rgba(0, 0, 0, 0.2);
+    --shadow-cell-hover: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-cell-active: 0 2px 6px rgba(0, 0, 0, 0.1);
+    --shadow-cell-win: 0 0 12px 4px rgba(217, 70, 239, 0.5);
+
+    --base-font: 'Work Sans';
+}
+
+@layer base {
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: var(--base-font), sans-serif;
+        background-color: var(--bg-main);
+    }
+}
+
+@layer components {
+    .btn {
+        @apply cursor-pointer transition duration-200 ease-in-out bg-[var(--bg-button)];
+    }
+
+    .btn:not(:disabled):hover {
+        @apply bg-[var(--bg-button-hover)];
+    }
+
+    .btn:not(:disabled):active {
+        @apply bg-[var(--bg-button-active)];
+    }
+
+    .btn:disabled {
+        @apply cursor-default bg-[var(--bg-button-active)];
+    }
+
+    .btn-reset {
+        @apply w-[200px] h-[75px] rounded-[50px] text-[var(--color-accent-main)] shadow-[var(--shadow-button-default)] text-[26px];
+    }
+
+    .btn-reset:not(:disabled):hover {
+        @apply shadow-[var(--shadow-button-hover)] -translate-y-0.5;
+    }
+
+    .btn-reset:not(:disabled):active {
+        @apply shadow-[var(--shadow-button-active)] translate-y-px;
+    }
+
+    .btn-cell {
+        @apply border-4 border-solid border-[var(--bg-main)] rounded-xl overflow-hidden;
+    }
+
+    .btn-cell:not(:disabled):hover {
+        @apply scale-103 shadow-[var(--shadow-cell-hover)];
+    }
+
+    .btn-cell:not(:disabled):active {
+        @apply scale-97 shadow-[var(--shadow-cell-active)];
+    }
+
+    .btn-cell.btn-cell-win {
+        @apply bg-[var(--bg-cell-highlight)] shadow-[var(--shadow-cell-win)] scale-101 border-[var(--color-accent-purple)];
+    }
+}
+
+#root {
+    min-width: 320px;
+}

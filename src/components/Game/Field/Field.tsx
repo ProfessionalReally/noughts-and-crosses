@@ -1,9 +1,18 @@
 import { FieldLayout } from './FieldLayout';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { selectField } from '@src/redux/selectors';
+import { Component } from 'react';
+import { RootState } from '@src/redux/store';
 
-export const Field = () => {
-	const field = useSelector(selectField);
+type FieldProps = ReturnType<typeof mapStateToProps>;
 
-	return <FieldLayout field={field} />;
-};
+export class FieldComponent extends Component<FieldProps> {
+	render() {
+		const { field } = this.props;
+		return <FieldLayout field={field} />;
+	}
+}
+
+const mapStateToProps = (state: RootState) => ({ field: selectField(state) });
+
+export const Field = connect(mapStateToProps)(FieldComponent);

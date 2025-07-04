@@ -1,11 +1,21 @@
 import { GameLayout } from './GameLayout';
 import { resetGame } from '@src/redux/actions/actions';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { AppDispatch } from '@src/redux/store';
+import { Component } from 'react';
 
-export const Game = () => {
-	const dispatch = useDispatch<AppDispatch>();
-	const handleClickReset = () => dispatch(resetGame());
+type GameComponentProps = ReturnType<typeof mapDispatchToProps>;
 
-	return <GameLayout onClickReset={handleClickReset} />;
-};
+export class GameComponent extends Component<GameComponentProps> {
+	render() {
+		const { handleClickReset } = this.props;
+		
+		return <GameLayout onClickReset={handleClickReset} />;
+	}
+}
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+	handleClickReset: () => dispatch(resetGame()),
+});
+
+export const Game = connect(null, mapDispatchToProps)(GameComponent);

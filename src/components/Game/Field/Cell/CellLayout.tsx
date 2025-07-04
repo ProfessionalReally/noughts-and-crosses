@@ -1,5 +1,4 @@
-import '@src/styles/components/cell.scss';
-import { memo, useCallback, FC, ReactNode } from 'react';
+import { ReactNode, PureComponent } from 'react';
 
 type PropsType = {
 	children: ReactNode;
@@ -9,22 +8,25 @@ type PropsType = {
 	isGameEnded: boolean;
 };
 
-export const CellLayout: FC<PropsType> = memo(
-	({ children, onClickCell, index, isWinning, isGameEnded }) => {
+export class CellLayout extends PureComponent<PropsType> {
+	render() {
+		const { children, onClickCell, index, isWinning, isGameEnded } =
+			this.props;
+
 		const isDisabled = !!children || isGameEnded;
 
-		const onClick = useCallback(() => {
+		const onClick = () => {
 			onClickCell(index);
-		}, [index, onClickCell]);
+		};
 
 		return (
 			<button
 				onClick={onClick}
 				disabled={isDisabled}
-				className={`cell__button ${isWinning ? 'cell__button-win' : ''}`}
+				className={`btn btn-cell ${isWinning ? 'btn-cell-win' : ''}`}
 			>
 				{children}
 			</button>
 		);
-	},
-);
+	}
+}

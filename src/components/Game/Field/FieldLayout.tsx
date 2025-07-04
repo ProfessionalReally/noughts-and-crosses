@@ -1,13 +1,19 @@
-import '@src/styles/components/field.scss';
 import { Player } from '@src/types/types';
 import { Cell } from './Cell/Cell';
-import { memo } from 'react';
+import { Component } from 'react';
 
-export const FieldLayout = memo(
-	({ field }: { field: (Player | '')[] }) => {
+type FieldLayoutProps = {
+	field: (Player | '')[];
+};
+
+export class FieldLayout extends Component<FieldLayoutProps> {
+	render() {
+		const { field } = this.props;
 		return (
 			<section
-				className={'field'}
+				className={
+					'grid grid-cols-[repeat(3,180px)] grid-rows-[repeat(3,180px)]'
+				}
 				role='group'
 				aria-label='Game board noughts and crosses'
 			>
@@ -17,10 +23,5 @@ export const FieldLayout = memo(
 					))}
 			</section>
 		);
-	},
-	(prevProps, nextProps) => {
-		return (
-			JSON.stringify(prevProps.field) === JSON.stringify(nextProps.field)
-		);
-	},
-);
+	}
+}

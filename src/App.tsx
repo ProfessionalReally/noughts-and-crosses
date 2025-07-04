@@ -1,9 +1,8 @@
 import { Game } from './components/Game/Game';
-import './styles/components/app.scss';
 
 export const App = () => {
 	return (
-		<div className={'app'}>
+		<div className={'mx-auto w-max'}>
 			<Game />
 		</div>
 	);

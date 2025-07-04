@@ -1,15 +1,26 @@
-import '@src/styles/components/information.scss';
-import { ReactNode } from 'react';
+import { Component, ReactNode } from 'react';
 
-export const InformationLayout = ({ children }: { children: ReactNode }) => {
-	return (
-		<section className={'information'}>
-			<h1 className={'information__title'}>
-				<span className={'information__text--nought'}>Noughts </span>
-				and
-				<span className={'information__text--cross'}> Crosses</span>
-			</h1>
-			{children}
-		</section>
-	);
+type InformationLayoutProps = {
+	children: ReactNode;
 };
+
+export class InformationLayout extends Component<InformationLayoutProps> {
+	render() {
+		const { children } = this.props;
+
+		return (
+			<section
+				className={
+					'mt-[50px] flex flex-col items-center justify-center gap-10'
+				}
+			>
+				<h1 className={'text-6xl font-bold text-white'}>
+					<span className={'text-accent-main'}>Noughts </span>
+					and
+					<span className={'text-accent-secondary'}> Crosses</span>
+				</h1>
+				{children}
+			</section>
+		);
+	}
+}
