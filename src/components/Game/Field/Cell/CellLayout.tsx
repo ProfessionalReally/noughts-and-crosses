@@ -1,21 +1,16 @@
 import '@src/styles/components/cell.scss';
-import { memo, useCallback, FC, ReactNode } from 'react';
+import { memo, FC, ReactNode } from 'react';
 
 type PropsType = {
 	children: ReactNode;
-	onClickCell: (index: number) => void;
-	index: number;
+	onClick: () => void;
 	isWinning: boolean;
 	isGameEnded: boolean;
 };
 
 export const CellLayout: FC<PropsType> = memo(
-	({ children, onClickCell, index, isWinning, isGameEnded }) => {
+	({ children, onClick, isWinning, isGameEnded }) => {
 		const isDisabled = !!children || isGameEnded;
-
-		const onClick = useCallback(() => {
-			onClickCell(index);
-		}, [index, onClickCell]);
 
 		return (
 			<button

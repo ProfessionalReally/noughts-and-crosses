@@ -1,11 +1,11 @@
-import { createStore } from 'redux';
-import { gameReducer } from '@src/redux/reducers';
-import type { IGame } from '@src/types/types.ts';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import gameReducer from '@src/redux/reducers';
+import { configureStore } from '@reduxjs/toolkit';
 
-export const store = createStore(gameReducer, composeWithDevTools());
+export const store = configureStore({
+	reducer: {
+		game: gameReducer,
+	},
+});
 
-export type RootState = ReturnType<typeof store.getState> & {
-	game: IGame;
-};
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

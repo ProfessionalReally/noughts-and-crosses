@@ -1,7 +1,11 @@
 import '@src/styles/components/information.scss';
-import { ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
-export const InformationLayout = ({ children }: { children: ReactNode }) => {
+type PropsType = {
+	children: ReactNode;
+};
+
+export const InformationLayout: FC<PropsType> = ({ children }) => {
 	return (
 		<section className={'information'}>
 			<h1 className={'information__title'}>

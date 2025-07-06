@@ -1,7 +1,6 @@
 import { IGame, PlayerSign } from '@src/types/types';
-import * as actions from '../actions/actionTypes';
 import { getGameState, getNextPlayer } from '@src/redux/utils';
-import { resetGame, takeTurn } from '@src/redux/actions/actions';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IGame = {
 	currentPlayer: PlayerSign.Cross,
@@ -11,36 +10,30 @@ const initialState: IGame = {
 	winningCombo: null,
 };
 
-type ActionType = ReturnType<typeof takeTurn> | ReturnType<typeof resetGame>;
-
-export const gameReducer = (
-	state: IGame = initialState,
-	action: ActionType,
-) => {
-	switch (action.type) {
-		case actions.TAKE_TURN:
+const gameSlice = createSlice({
+	name: 'game',
+	initialState,
+	reducers: {
+		takeTurn(state, action: PayloadAction<number>) {
 			if (!state.isGameEnded && !state.field[action.payload]) {
-				const newField = [...state.field];
-				newField[action.payload] = state.currentPlayer;
+				state.field[action.payload] = state.currentPlayer;
 				const { isGameEnded, isDraw, winningCombo } = getGameState(
-					newField,
+					state.field,
 					state.currentPlayer,
 				);
-				return {
-					...state,
-					isGameEnded,
-					isDraw,
-					winningCombo,
-					field: newField,
-					currentPlayer: isGameEnded
-						? state.currentPlayer
-						: getNextPlayer(state.currentPlayer),
-				};
+				state.isGameEnded = isGameEnded;
+				state.isDraw = isDraw;
+				state.winningCombo = winningCombo;
+				state.currentPlayer = isGameEnded
+					? state.currentPlayer
+					: getNextPlayer(state.currentPlayer);
 			}
-			return state;
-		case actions.RESET_GAME:
+		},
+		resetGame() {
 			return initialState;
-		default:
-			return state;
-	}
-};
+		},
+	},
+});
+
+export const { takeTurn, resetGame } = gameSlice.actions;
+export default gameSlice.reducer;

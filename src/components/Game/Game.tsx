@@ -1,10 +1,9 @@
 import { GameLayout } from './GameLayout';
-import { resetGame } from '@src/redux/actions/actions';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@src/redux/store';
+import { useAppDispatch } from '@src/redux/hooks';
+import { resetGame } from '@src/redux/reducers';
 
 export const Game = () => {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useAppDispatch();
 	const handleClickReset = () => dispatch(resetGame());
 
 	return <GameLayout onClickReset={handleClickReset} />;
